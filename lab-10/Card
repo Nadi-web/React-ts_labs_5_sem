@@ -1,0 +1,28 @@
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
+import { TEntry } from './types';
+
+type CardProps = {
+    info: TEntry;
+};
+
+const Card: FC<CardProps> = (props) => {
+    const { info } = props;
+
+    return (
+        <div className="card">
+            <img src={info.Poster} alt={info.Title} className="poster" />
+            <div className="body">
+                <Link to={`/${info.imdbID}`}>
+                    <h2>{info.Title}</h2>
+                </Link>
+                <div className="info">
+                    <span className="year">{info.Year}</span>
+                    <span className="type">{info.Type}</span>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Card;
