@@ -1,0 +1,233 @@
+import React from 'react';
+import { BrowserRouter as Router, Route, Link, Routes, Outlet } from 'react-router-dom';
+import "./App.css";
+
+
+// const apiKey = '63d91fa6';
+// const apiUrl = `https://www.omdbapi.com/?apikey=${apiKey}&s=movieTitle&type=movie`;
+
+
+type Movie = {
+  title: string;
+  year: number;
+  category: string;
+  imgUrl: string;
+};
+
+const moviesData: Movie[] = [
+  {
+    title: 'Карты Деньги Два ствола',
+    year: 1998,
+    category: 'movies',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/615/1585375126-1019836682.webp',
+  },
+  
+  {
+    title: 'Реальные упыри',
+    year: 2014,
+    category: 'movies',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/e8e/1585391418-1385793713.webp',
+  },
+
+  {
+    title: 'Опенгеймер',
+    year: 2023,
+    category: 'movies',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/958/1689960439-181086839.webp',
+  },
+
+  {
+    title: 'Убийцы цветочной луны',
+    year: 2023,
+    category: 'movies',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/a91/1697912758-1928702509.webp',
+  },
+
+  {
+    title: 'Гренландия',
+    year: 2020,
+    category: 'movies',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/391/1605816180-85800129.jpg',
+  },
+
+  {
+    title: 'Джентельмены',
+    year: 2020,
+    category: 'movies',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/9aa/1585872313-2085647693.webp',
+  },
+];
+
+const seriesData: Movie[] = [
+  {
+    title: 'Очень странные дела',
+    year: 2016,
+    category: 'series',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/d3f/1585312081-615210659.webp',
+  },
+
+  {
+    title: 'Бункер',
+    year: 2023,
+    category: 'series',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/e44/1683306855-333966072.webp',
+  },
+
+  {
+    title: 'The Boys',
+    year: 2019,
+    category: 'series',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/d80/1585314555-2039685043.webp',
+  },
+
+  {
+    title: 'Ведьмак',
+    year: 2019,
+    category: 'series',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/887/1585310056-2015110412.webp',
+  },
+
+  {
+    title: 'Дождь',
+    year: 2018,
+    category: 'series',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/5b5/1596797256-1773190234.jpg',
+  },
+
+];
+
+const cartoonsData: Movie[] = [
+  {
+    title: 'Гринч',
+    year: 2018,
+    category: 'cartoons',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/96a/1585362140-942034968.webp',
+  },
+
+  {
+    title: 'Головоломка',
+    year: 2015,
+    category: 'cartoons',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/120/1585360774-1298323585.webp',
+  },
+
+  {
+    title: 'Разочарование',
+    year: 2018,
+    category: 'cartoons',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/be8/1585365485-1605936431.jpg',
+  },
+
+  {
+    title: 'Душа',
+    year: 2020,
+    category: 'cartoons',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/f58/1608946153-454322541.webp',
+  },
+
+  {
+    title: 'Вперед',
+    year: 2020,
+    category: 'cartoons',
+    imgUrl: 'https://kinogo.biz/uploads/mini/minifull/05f/1585919900-678287423.webp',
+  },  
+
+];
+
+const MovieCard = ({ title, year, category, imgUrl }: Movie) => (
+  <div className="movie-card">
+    <img className="img" src={imgUrl} alt={title} />
+    <div className="col">
+      <h4>{title}</h4>
+      <div className="row">
+        <p>{year}</p>
+        <Link to={`/movie/${category}`} className="movie-link">
+          movie
+        </Link>
+      </div>
+    </div>
+  </div>
+);
+
+const renderMovieCards = (movies: Movie[]) => {
+  return movies.map((movie, index) => (
+    <MovieCard
+      key={index}
+      title={movie.title}
+      year={movie.year}
+      category={movie.category}
+      imgUrl={movie.imgUrl}
+    />
+  ));
+};
+
+const Catalog = () => {
+  return (
+    <Router>
+      <div>
+        <header>
+          <nav>
+            <ul>
+              <li>
+                <Link className="link" to="/movies">Movies</Link>
+              </li>
+              <li>
+                <Link className="link" to="/series">Series</Link>
+              </li>
+              <li>
+                <Link className="link" to="/cartoons">Cartoons</Link>
+              </li>
+            </ul>
+          </nav>
+        </header>
+
+        <main>
+          <Routes>
+            <Route path="/movies" element={<Movies />} />
+            <Route path="/series" element={<Series />} />
+            <Route path="/cartoons" element={<Cartoons />} />
+          </Routes>
+        </main>
+
+      </div>
+    </Router>
+  );
+};
+
+const Movies = () => {
+  return (
+    <div>
+      <h2>Movies</h2>
+      <div className="container">
+        {renderMovieCards(moviesData)}
+      </div>
+      <Outlet />
+    </div>
+  );
+};
+
+const Series = () => {
+  return (
+    <div>
+      <h2>Series</h2>
+      <div className="container">
+          {renderMovieCards(seriesData)}
+      </div>
+      <Outlet />
+    </div>
+  );
+};
+
+const Cartoons = () => {
+  return (
+    <div>
+      <h2>Cartoons</h2>
+      <div className="container">
+          {renderMovieCards(cartoonsData)}
+      </div>
+      <Outlet />
+    </div>
+  );
+};
+
+export default Catalog;
