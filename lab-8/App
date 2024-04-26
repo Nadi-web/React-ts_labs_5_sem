@@ -1,0 +1,102 @@
+// import React from 'react';
+// import './App.css';
+
+// import { useState } from 'react';
+
+// type ButtonProps = {
+//   title: string;
+//   onClick: () => void;
+//   disabled?: boolean;
+// };
+
+// function Button({ title, onClick, disabled }: ButtonProps) {
+//   return (
+//     <button onClick={onClick} disabled={disabled}>
+//       {title}
+//     </button>
+//   );
+// }
+
+// function Counter() {
+//   const [count, setCount] = useState<number>(0);
+
+//   const increaseCount = () => {
+//     setCount((prevCount) => prevCount + 1);
+//   };
+
+//   const resetCount = () => {
+//     setCount(0);
+//   };
+
+//   return (
+//     <div className="counter">
+//       <h2>Counter: {count}</h2>
+//       <Button title="Increase" onClick={increaseCount} disabled={count >= 5} />
+//       <Button title="Reset" onClick={resetCount} disabled={count === 0} />
+//     </div>
+//   );
+// }
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <Counter />
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
+import React, { useState } from 'react';
+import { type FC } from 'react';
+import './App.css';
+
+type ButtonProps = {
+  onClick: () => void;
+  title: string;
+  disabled?: boolean;
+};
+
+const Button: FC<ButtonProps> = (props) => {
+  const { onClick, title, disabled } = props;
+
+  return (
+      <button onClick={onClick} disabled={disabled}>
+          {title}
+      </button>
+  );
+};
+
+const Counter: React.FC = () => {
+  const [count, setCount] = useState(0);
+
+  const counterStyle = {
+    color: count === 5 ? 'red' : '#61dafb',
+    fontSize: '48px',
+    marginBottom: '10px',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
+
+  const appStyle = {
+    background: 'black',
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
+  
+  return (
+    <div className="counter" style={appStyle}>
+      <h1 style={counterStyle}>{count}</h1>
+      <div className="button-group">
+      <Button title="Increase" onClick={() => setCount((v) => v + 1)} disabled={count === 5}/>
+      <Button title="Reset" onClick={() => setCount(0)} disabled={count === 0} />
+      </div>
+    </div>
+  );
+};
+
+export default Counter;
